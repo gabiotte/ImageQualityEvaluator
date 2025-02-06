@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from scipy.stats import kurtosis
 import matplotlib.pyplot as plt
+import os
 
 def load_image(image_path):
     return cv2.imread(image_path)
@@ -67,9 +68,11 @@ def evaluate_image_quality(image_path):
     
     return metrics
 
-def compare_images(image_path1, image_path2):
-    metrics1 = evaluate_image_quality(image_path1)
-    metrics2 = evaluate_image_quality(image_path2)
+def compare_images(diretorio):
+    evaluation = {}
+    for file in os.listdir(diretorio):
+        path = os.path.join(diretorio, file)
+        evaluation[file] = evaluate_image_quality(path)
     
     weights = {
         "Nitidez (Laplacian)": 1.5,
@@ -81,20 +84,19 @@ def compare_images(image_path1, image_path2):
         "SNR (Signal-to-Noise Ratio)": 1.4
     }
     
-    score1 = sum(weights[key] * metrics1[key] for key in weights)
-    score2 = sum(weights[key] * metrics2[key] for key in weights)
-    
-    print(f"Imagem 1 - Score: {score1:.2f}")
-    print(f"Imagem 2 - Score: {score2:.2f}")
-    
-    if score1 > score2:
-        print("Imagem 1 é melhor!")
-    else:
-        print("Imagem 2 é melhor!")
-    
-    return metrics1, metrics2
+    scores = {}
+    for image in evaluation:
+        score = sum(weights[metric] * evaluation[image][metric] for metric in weights)
+        scores[image] = score
 
-# Teste
-image_path1 = "UXGA_1.jpeg"  # Substitua pelo caminho da primeira imagem
-image_path2 = "UXGA_2.jpeg"  # Substitua pelo caminho da segunda imagem
-compare_images(image_path1, image_path2)
+    best_one = max(scores, key=scores.get)
+        
+    return scores, best_one
+
+scores, best = compare_images("images")
+
+print(f"\nMelhor imagem:\n  {best}")
+print("\nPontuações:")
+for filename, score in scores.items():
+    print(f"  {filename}: {score:.2f}")
+print("\n")
