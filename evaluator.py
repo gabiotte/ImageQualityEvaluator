@@ -1,7 +1,5 @@
 import cv2
 import numpy as np
-from scipy.stats import kurtosis
-import matplotlib.pyplot as plt
 import os
 
 def load_image(image_path):
