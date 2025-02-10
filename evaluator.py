@@ -22,7 +22,9 @@ def compare_images(diretorio):
         results["Contraste RMS"].append(contrast_rms(image))
         results["Saturação Média"].append(saturation_metrics(image)[0])
         results["DP da Saturação"].append(saturation_metrics(image)[1])
-        results["Distribuição de Cores (BGR)"].append([round(val, 2) for val in color_distribution(image)])
+        results["Valor de Azul"].append(color_distribution(image)[0])
+        results["Valor de Verde"].append(color_distribution(image)[1])
+        results["Valor de Vermelho"].append(color_distribution(image)[2])
         results["SNR"].append(signal_to_noise_ratio(image))
             
     return results
