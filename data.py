@@ -12,3 +12,5 @@ def show_table(df):
 def save_table(df, diretorio):
     path = os.path.join(diretorio, "compare_table")
     df.to_csv(path, index=False)
+
+    

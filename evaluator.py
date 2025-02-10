@@ -1,6 +1,6 @@
 import argparse
 from compare import *
-from table import *
+from data import *
 
 diretorio = "images"
 dados = compare_images(diretorio)
