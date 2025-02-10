@@ -1,9 +1,14 @@
 import cv2
 import numpy as np
 import os
+from collections import defaultdict
+import pandas as pd
 
 def load_image(image_path):
-    return cv2.imread(image_path)
+    image = cv2.imread(image_path)
+    if image is None:
+        raise ValueError("Erro: a imagem não foi carregada corretamente. Verifique o caminho do arquivo.")
+    return image
 
 def convert_gray(image):
     return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -50,51 +55,27 @@ def signal_to_noise_ratio(image):
 
 # Função Principal de Avaliação
 
-def evaluate_image_quality(image_path):
-    image = load_image(image_path)
-    
-    metrics = {
-        "Nitidez (Laplacian)": laplacian_variance(image),
-        "Nitidez (Marziliano)": marziliano_blur(image),
-        "Brilho Médio": brightness_mean(image),
-        "Contraste RMS": contrast_rms(image),
-        "Saturação Média": saturation_metrics(image)[0],
-        "Desvio Padrão da Saturação": saturation_metrics(image)[1],
-        "Distribuição de Cores (LAB)": color_distribution(image),
-        "SNR (Signal-to-Noise Ratio)": signal_to_noise_ratio(image)
-    }
-    
-    return metrics
-
 def compare_images(diretorio):
-    evaluation = {}
+    results = defaultdict(list)
+
     for file in os.listdir(diretorio):
         path = os.path.join(diretorio, file)
-        evaluation[file] = evaluate_image_quality(path)
-    
-    weights = {
-        "Nitidez (Laplacian)": 1.5,
-        "Nitidez (Marziliano)": 1.2,
-        "Brilho Médio": 1.0,
-        "Contraste RMS": 1.3,
-        "Saturação Média": 1.1,
-        "Desvio Padrão da Saturação": 1.1,
-        "SNR (Signal-to-Noise Ratio)": 1.4
-    }
-    
-    scores = {}
-    for image in evaluation:
-        score = sum(weights[metric] * evaluation[image][metric] for metric in weights)
-        scores[image] = score
+        image = load_image(path)
 
-    best_one = max(scores, key=scores.get)
-        
-    return scores, best_one
+        results["Imagem"].append(file)
+        results["Nitidez (L)"].append(laplacian_variance(image))
+        results["Nitidez (M)"].append(marziliano_blur(image))
+        results["Brilho Médio"].append(brightness_mean(image))
+        results["Contraste RMS"].append(contrast_rms(image))
+        results["Saturação Média"].append(saturation_metrics(image)[0])
+        results["DP da Saturação"].append(saturation_metrics(image)[1])
+        results["Distribuição de Cores (BGR)"].append([round(val, 2) for val in color_distribution(image)])
+        results["SNR"].append(signal_to_noise_ratio(image))
+            
+    return results
 
-scores, best = compare_images("images")
+def show_table(dados):
+    df = pd.DataFrame(dados)
+    print(df.round(2))
 
-print(f"\nMelhor imagem:\n  {best}")
-print("\nPontuações:")
-for filename, score in scores.items():
-    print(f"  {filename}: {score:.2f}")
-print("\n")
+show_table(compare_images("images"))
