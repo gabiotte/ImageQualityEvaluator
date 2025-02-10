@@ -1,3 +1,4 @@
+import argparse
 import cv2
 import numpy as np
 import os
@@ -79,3 +80,10 @@ def show_table(dados):
     print(df.round(2))
 
 show_table(compare_images("images"))
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Avaliação de Qualidade de Imagem")
+    parser.add_argument("diretorio", type=str, help="Diretório contendo as imagens para análise")
+
+    args = parser.parse_args()
+    show_table(compare_images(args.diretorio))
