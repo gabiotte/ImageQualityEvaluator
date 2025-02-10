@@ -5,8 +5,14 @@ from metrics import *
 def compare_images(diretorio):
     results = defaultdict(list)
 
+    allowed_ext = (".jpg", ".jpeg", ".bmp")
+
     for file in os.listdir(diretorio):
         path = os.path.join(diretorio, file)
+
+        if not file.lower().endswith(allowed_ext):
+            continue
+
         image = load_image(path)
 
         results["Imagem"].append(file)
