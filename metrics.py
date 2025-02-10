@@ -42,6 +42,12 @@ def color_distribution(image):
     lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
     return np.mean(lab, axis=(0, 1))
 
+def color_distribution_range(image):
+    rgb_values = color_distribution(image)
+    range = max(rgb_values) - min(rgb_values)
+    return range
+
+
 # 4. Ruído
 
 def signal_to_noise_ratio(image):

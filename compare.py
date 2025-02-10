@@ -25,6 +25,7 @@ def compare_images(diretorio):
         results["Valor de Azul"].append(color_distribution(image)[0])
         results["Valor de Verde"].append(color_distribution(image)[1])
         results["Valor de Vermelho"].append(color_distribution(image)[2])
+        results["Range RGB"].append(color_distribution_range(image))
         results["SNR"].append(signal_to_noise_ratio(image))
             
     return results
