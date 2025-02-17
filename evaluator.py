@@ -6,9 +6,10 @@ diretorio = "images"
 dados = compare_images(diretorio)
 df = DataFrame(dados)
 
+print("Tabela Metricas x Imagens:")
 df.show()
-df.best_values().show()
-print(df.best_image())
+print("\nMelhores Valores para Cada Métrica:\n",df.best_values())
+print("\nImagem com Melhores Resultados: ", df.best_image())
 
 # if __name__ == "__main__":
 #     parser = argparse.ArgumentParser(description="Avaliação de Qualidade de Imagem")

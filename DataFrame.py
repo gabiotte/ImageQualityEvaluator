@@ -34,7 +34,7 @@ class DataFrame:
             best_values[metric].append(self.dados["Imagem"][index])
             best_values[metric].append(self.dados[metric][index])
             
-        df_best_values = DataFrame(best_values)
+        df_best_values = pd.DataFrame(best_values)
         return df_best_values
     
     def best_image(self):
