@@ -1,15 +1,18 @@
 import argparse
 from compare import *
-from DataFrame import *
+from Table import *
+from relatorio import *
 
 diretorio = "images"
 dados = compare_images(diretorio)
-df = DataFrame(dados)
+df = Table(dados)
 
 print("Tabela Metricas x Imagens:")
 df.show()
 print("\nMelhores Valores para Cada Métrica:\n",df.best_values())
 print("\nImagem com Melhores Resultados: ", df.best_image())
+
+gerar_relatório(dados)
 
 # if __name__ == "__main__":
 #     parser = argparse.ArgumentParser(description="Avaliação de Qualidade de Imagem")

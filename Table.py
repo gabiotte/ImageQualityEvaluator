@@ -3,7 +3,7 @@ import os
 from collections import defaultdict
 
 
-class DataFrame: 
+class Table: 
     def __init__(self, dados):
         self.df = pd.DataFrame(dados).round(2)
         self.dados = dados
