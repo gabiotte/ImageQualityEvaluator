@@ -1,14 +1,14 @@
 import argparse
 from compare import *
-from DataHandler import *
+from DataFrame import *
 
 diretorio = "images"
 dados = compare_images(diretorio)
-df = DataHandler(dados)
+df = DataFrame(dados)
 
 df.show()
-# max = df.best_values()
-# max.show()
+df.best_values().show()
+print(df.best_image())
 
 # if __name__ == "__main__":
 #     parser = argparse.ArgumentParser(description="Avaliação de Qualidade de Imagem")
