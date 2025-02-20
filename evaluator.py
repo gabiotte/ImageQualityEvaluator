@@ -3,16 +3,27 @@ from compare import *
 from Table import *
 from relatorio import *
 
-diretorio = "images"
-dados = compare_images(diretorio)
-df = Table(dados)
+diretorios = ["GC 0308", "NT 99141", "OV 2640", "OV 7670"]
+for diretorio in diretorios:
+    
+    # Faz a comparação e cria o dataframe
+    dados = compare_images(diretorio)
+    df = Table(dados)
 
-print("Tabela Metricas x Imagens:")
-df.show()
-print("\nMelhores Valores para Cada Métrica:\n",df.best_values())
-print("\nImagem com Melhores Resultados: ", df.best_image())
+    # # Mostrar tabela de comparação
+    # print("Tabela Metricas x Imagens:")
+    # df.show()
 
-gerar_relatório(dados)
+    # Mostrar melhores valores para cada métrica
+    print("\nMelhores Valores para Cada Métrica:\n",df.best_values())
+    print("\nImagem com Melhores Resultados: ", df.best_image())
+
+    # # Salva a tabela e o relatório
+    # df.save(diretorio)
+    # gerar_relatório(dados, diretorio)
+
+
+
 
 # if __name__ == "__main__":
 #     parser = argparse.ArgumentParser(description="Avaliação de Qualidade de Imagem")

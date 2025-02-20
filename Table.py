@@ -12,7 +12,7 @@ class Table:
         print(self.df)
 
     def save(self, diretorio):
-        path = os.path.join(diretorio, "table")
+        path = os.path.join(diretorio, "metrics_x_images.csv")
         self.df.to_csv(path, index=False)
 
     def best_values(self):
@@ -31,13 +31,16 @@ class Table:
             else:
                 index = self.df[metric].idxmax()
                 
-            best_values[metric].append(self.dados["Imagem"][index])
-            best_values[metric].append(self.dados[metric][index])
+            best_values["Métrica"].append(metric)    
+            best_values["Imagem"].append(self.dados["Imagem"][index])
+            best_values["Valor"].append(self.dados[metric][index])
             
         df_best_values = pd.DataFrame(best_values)
         return df_best_values
     
     def best_image(self):
         best_values = self.best_values()
-        best_image = best_values.iloc[0].value_counts().idxmax()
+        best_image = best_values["Imagem"].value_counts().idxmax()
         return best_image
+
+    
