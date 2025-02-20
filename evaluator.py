@@ -5,12 +5,15 @@ from relatorio import *
 
 diretorios = ["GC 0308", "NT 99141", "OV 2640", "OV 7670"]
 for diretorio in diretorios:
+    print("\n\n----------------------- ", diretorio, " ----------------------- \n")
 
     # Faz a comparação e cria o dataframe
     dados = compare_images(diretorio)
     df = Table(dados)
     
-    print(df.normalized())
+    df.std()
+
+    # print(df.normalized())
 
     # # Mostrar tabela de comparação
     # print("Tabela Metricas x Imagens:")
