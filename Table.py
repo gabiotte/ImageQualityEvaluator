@@ -6,40 +6,49 @@ from collections import defaultdict
 class Table: 
     def __init__(self, dados):
         self.df = pd.DataFrame(dados).round(2)
-        self.dados = dados
+        self.df.set_index("Imagem", inplace=True)
 
     def show(self):
         print(self.df)
 
     def save(self, diretorio):
         path = os.path.join(diretorio, "metrics_x_images.csv")
-        self.df.to_csv(path, index=False)
+        self.df.to_csv(path)
 
     def normalized(self):
         normalized = defaultdict(list)
-        for metric in self.df.columns:
+        table = self.df.reset_index()
+
+        for metric in table.columns:
+
             if metric == "Imagem":
-                continue
-            if metric == "Valor de Azul":
-                continue
-            if metric == "Valor de Verde":
-                continue
-            if metric == "Valor de Vermelho":
+                normalized[metric] = table.get(metric)
                 continue
 
-            max = self.df[metric].max()
-            min = self.df[metric].min()
+            elif metric == "Valor de Azul":
+                continue
+            elif metric == "Valor de Verde":
+                continue
+            elif metric == "Valor de Vermelho":
+                continue
+
+            max = table[metric].max()
+            min = table[metric].min()
+
 
             if metric == "Range RGB":
-                for value in self.df[metric]:
+                for value in table[metric]:
                     value = (max - value) / (max - min)
                     normalized[metric].append(value)
+
                 continue
 
 
-            for value in self.df[metric]:
+            for value in table[metric]:
                 value = (value - min) / (max - min)
                 normalized[metric].append(value)
-
-        return pd.DataFrame(normalized)    
+        
+        df_normalized = pd.DataFrame(normalized)
+        df_normalized.set_index("Imagem", inplace=True)  
+        return df_normalized
     

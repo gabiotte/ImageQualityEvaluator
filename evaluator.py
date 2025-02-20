@@ -9,7 +9,7 @@ for diretorio in diretorios:
     # Faz a comparação e cria o dataframe
     dados = compare_images(diretorio)
     df = Table(dados)
-
+    
     print(df.normalized())
 
     # # Mostrar tabela de comparação
