@@ -5,7 +5,7 @@ from relatorio import *
 
 diretorios = ["GC 0308", "NT 99141", "OV 2640", "OV 7670"]
 for diretorio in diretorios:
-    
+
     # Faz a comparação e cria o dataframe
     dados = compare_images(diretorio)
     df = Table(dados)
@@ -15,14 +15,15 @@ for diretorio in diretorios:
     # df.show()
 
     # Mostrar melhores valores para cada métrica
-    print("\nMelhores Valores para Cada Métrica:\n",df.best_values())
-    print("\nImagem com Melhores Resultados: ", df.best_image())
+    # print("\nMelhores Valores para Cada Métrica:\n",df.best_values())
+    # print("\nImagem com Melhores Resultados: ", df.best_image())
 
     # # Salva a tabela e o relatório
     # df.save(diretorio)
     # gerar_relatório(dados, diretorio)
 
-
+    # Mostrar o maior valor de cada métrica
+    print(df.diference())
 
 
 # if __name__ == "__main__":

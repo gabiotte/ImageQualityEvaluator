@@ -16,7 +16,7 @@ class Table:
         self.df.to_csv(path, index=False)
 
     def best_values(self):
-        best_values = defaultdict(list)
+        best_values = {}
         for metric in self.df.columns:
             if metric == "Imagem":
                 continue
@@ -30,17 +30,26 @@ class Table:
                 index = self.df[metric].idxmin()
             else:
                 index = self.df[metric].idxmax()
-                
-            best_values["Métrica"].append(metric)    
-            best_values["Imagem"].append(self.dados["Imagem"][index])
-            best_values["Valor"].append(self.dados[metric][index])
-            
-        df_best_values = pd.DataFrame(best_values)
-        return df_best_values
+
+            best_values[metric] = self.df[metric][index]
+        return best_values # retorna um dicionário {metric : max_value}
+        
     
     def best_image(self):
         best_values = self.best_values()
         best_image = best_values["Imagem"].value_counts().idxmax()
         return best_image
 
-    
+    def diference(self):
+        max_values = self.best_values()
+        new_table = defaultdict(list)
+
+        for image in self.df["Imagem"]:
+            new_table["Imagem"].append(image)
+            
+        for metric in max_values:
+            for value in self.df[metric]:
+                value = max_values[metric] - value
+                new_table[metric].append(value)
+
+        return pd.DataFrame(new_table)
