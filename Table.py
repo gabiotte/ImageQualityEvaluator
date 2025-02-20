@@ -30,6 +30,13 @@ class Table:
             max = self.df[metric].max()
             min = self.df[metric].min()
 
+            if metric == "Range RGB":
+                for value in self.df[metric]:
+                    value = (max - value) / (max - min)
+                    normalized[metric].append(value)
+                continue
+
+
             for value in self.df[metric]:
                 value = (value - min) / (max - min)
                 normalized[metric].append(value)
