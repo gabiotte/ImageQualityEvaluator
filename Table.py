@@ -15,8 +15,8 @@ class Table:
         path = os.path.join(diretorio, "metrics_x_images.csv")
         self.df.to_csv(path, index=False)
 
-    def best_values(self):
-        best_values = {}
+    def normalized(self):
+        normalized = defaultdict(list)
         for metric in self.df.columns:
             if metric == "Imagem":
                 continue
@@ -26,30 +26,13 @@ class Table:
                 continue
             if metric == "Valor de Vermelho":
                 continue
-            if metric == "Range RGB":
-                index = self.df[metric].idxmin()
-            else:
-                index = self.df[metric].idxmax()
 
-            best_values[metric] = self.df[metric][index]
-        return best_values # retorna um dicionário {metric : max_value}
-        
-    
-    def best_image(self):
-        best_values = self.best_values()
-        best_image = best_values["Imagem"].value_counts().idxmax()
-        return best_image
+            max = self.df[metric].max()
+            min = self.df[metric].min()
 
-    def diference(self):
-        max_values = self.best_values()
-        new_table = defaultdict(list)
-
-        for image in self.df["Imagem"]:
-            new_table["Imagem"].append(image)
-            
-        for metric in max_values:
             for value in self.df[metric]:
-                value = max_values[metric] - value
-                new_table[metric].append(value)
+                value = (value - min) / (max - min)
+                normalized[metric].append(value)
 
-        return pd.DataFrame(new_table)
+        return pd.DataFrame(normalized)    
+    

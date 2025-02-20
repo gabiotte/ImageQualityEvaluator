@@ -10,20 +10,19 @@ for diretorio in diretorios:
     dados = compare_images(diretorio)
     df = Table(dados)
 
+    print(df.normalized())
+
     # # Mostrar tabela de comparação
     # print("Tabela Metricas x Imagens:")
     # df.show()
 
     # Mostrar melhores valores para cada métrica
     # print("\nMelhores Valores para Cada Métrica:\n",df.best_values())
-    # print("\nImagem com Melhores Resultados: ", df.best_image())
 
     # # Salva a tabela e o relatório
     # df.save(diretorio)
     # gerar_relatório(dados, diretorio)
 
-    # Mostrar o maior valor de cada métrica
-    print(df.diference())
 
 
 # if __name__ == "__main__":
