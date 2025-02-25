@@ -11,7 +11,7 @@ for diretorio in diretorios:
     dados = compare_images(diretorio)
     df = Table(dados)
     
-    df.std()
+    print(df.std())
 
     # print(df.normalized())
 

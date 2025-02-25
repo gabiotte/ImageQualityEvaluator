@@ -51,9 +51,15 @@ class Table:
         return df_normalized
     
     def std(self):
+        images_std = defaultdict(list)
         df_normalized = self.normalized()
-        print("Desvio padrão")
+
         for imagem in df_normalized.index:
             linha = df_normalized.loc[imagem]
             std = np.std(linha)
-            print(imagem, ": ", std)
+            images_std["Imagem"].append(imagem)
+            images_std["STD"].append(std)
+        
+        df_images_std = pd.DataFrame(images_std)
+        df_images_std.set_index("Imagem", inplace=True)
+        return df_images_std
