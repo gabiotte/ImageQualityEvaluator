@@ -50,16 +50,30 @@ class Table:
         df_normalized.set_index("Imagem", inplace=True)  
         return df_normalized
     
-    def std(self):
-        images_std = defaultdict(list)
-        df_normalized = self.normalized()
+    def classification(self):
+        classification = defaultdict(list)
+        table = self.normalized()
 
-        for imagem in df_normalized.index:
-            linha = df_normalized.loc[imagem]
+        for image in table.index:
+            linha = table.loc[image]
             std = np.std(linha)
-            images_std["Imagem"].append(imagem)
-            images_std["STD"].append(std)
+            average = sum(linha)
+            classification["Imagem"].append(image)
+            classification["STD"].append(std)
+            classification["Average"].append(average)
         
-        df_images_std = pd.DataFrame(images_std)
-        df_images_std.set_index("Imagem", inplace=True)
-        return df_images_std
+        df_classification = pd.DataFrame(classification)
+        df_classification.set_index("Imagem", inplace=True)
+        return df_classification
+    
+
+    def std_sorted(self):
+        df_classification = self.classification()
+        sorted = df_classification.sort_values(by=["STD"], ascending=True)
+        return sorted
+    
+    def avg_sorted(self):
+        df_classification = self.classification()
+        sorted = df_classification.sort_values(by=["Average"], ascending=False)
+        return sorted
+

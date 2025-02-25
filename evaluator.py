@@ -11,7 +11,9 @@ for diretorio in diretorios:
     dados = compare_images(diretorio)
     df = Table(dados)
     
-    print(df.std())
+    print(df.std_sorted())
+    print("\n")
+    print(df.avg_sorted())
 
     # print(df.normalized())
 
