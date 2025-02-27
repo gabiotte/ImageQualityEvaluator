@@ -57,7 +57,7 @@ class Table:
         for image in table.index:
             linha = table.loc[image]
             std = np.std(linha)
-            average = sum(linha)
+            average = sum(linha)/len(linha)
             classification["Imagem"].append(image)
             classification["STD"].append(std)
             classification["Average"].append(average)
@@ -75,5 +75,5 @@ class Table:
     def avg_sorted(self):
         df_classification = self.classification()
         sorted = df_classification.sort_values(by=["Average"], ascending=False)
-        return sorted
+        return
 

@@ -11,15 +11,15 @@ for diretorio in diretorios:
     dados = compare_images(diretorio)
     df = Table(dados)
     
-    print(df.std_sorted())
-    print("\n")
-    print(df.avg_sorted())
+    # std_sorted = df.std_sorted()
+    # avg_sorted = df.avg_sorted()
+    # print(avg_sorted,"\n\n",std_sorted)
 
     # print(df.normalized())
 
-    # # Mostrar tabela de comparação
-    # print("Tabela Metricas x Imagens:")
-    # df.show()
+    # Mostrar tabela de comparação
+    print("Tabela Metricas x Imagens:")
+    df.show()
 
     # Mostrar melhores valores para cada métrica
     # print("\nMelhores Valores para Cada Métrica:\n",df.best_values())

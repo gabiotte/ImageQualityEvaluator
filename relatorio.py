@@ -12,5 +12,6 @@ def gerar_relatório(dados, diretorio):
         value = best_v[metric][1].round(2)
         linha = f"{metric}: {best_v[metric][0]} ({value})\n"
         file.write(linha)
+            
     
-    
+     
