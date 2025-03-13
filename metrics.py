@@ -16,37 +16,18 @@ def laplacian_variance(image):
     gray = convert_gray(image)
     return cv2.Laplacian(gray, cv2.CV_64F).var()
 
+# 2. Ausência de desfoque
+
 def marziliano_blur(image):
     gray = convert_gray(image)
     sobelx = cv2.Sobel(gray, cv2.CV_64F, 1, 0, ksize=3)
     return np.mean(np.abs(sobelx))
 
-# 2. Exposição
-
-def brightness_mean(image):
-    gray = convert_gray(image)
-    return np.mean(gray)
+# 3. Contraste
 
 def contrast_rms(image):
     gray = convert_gray(image)
     return np.std(gray)
-
-# 3. Cores
-
-def saturation_metrics(image):
-    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    saturation = hsv[:, :, 1]
-    return np.mean(saturation), np.std(saturation)
-
-def color_distribution(image):
-    lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
-    return np.mean(lab, axis=(0, 1))
-
-def color_distribution_range(image):
-    rgb_values = color_distribution(image)
-    range = max(rgb_values) - min(rgb_values)
-    return range
-
 
 # 4. Ruído
 

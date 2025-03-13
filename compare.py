@@ -16,16 +16,9 @@ def compare_images(diretorio):
         image = load_image(path)
 
         results["Imagem"].append(file)
-        results["Nitidez (L)"].append(laplacian_variance(image))
-        results["Nitidez (M)"].append(marziliano_blur(image))
-        results["Brilho Medio"].append(brightness_mean(image))
-        results["Contraste RMS"].append(contrast_rms(image))
-        results["Saturacao Media"].append(saturation_metrics(image)[0])
-        results["DP da Saturacao"].append(saturation_metrics(image)[1])
-        results["Valor de Azul"].append(color_distribution(image)[0])
-        results["Valor de Verde"].append(color_distribution(image)[1])
-        results["Valor de Vermelho"].append(color_distribution(image)[2])
-        results["Range RGB"].append(color_distribution_range(image))
-        results["SNR"].append(signal_to_noise_ratio(image))
+        results["Nitidez"].append(laplacian_variance(image))
+        results["Desfoque"].append(marziliano_blur(image))
+        results["Contraste"].append(contrast_rms(image))
+        results["Ruído"].append(signal_to_noise_ratio(image))
             
     return results
