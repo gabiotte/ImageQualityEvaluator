@@ -2,14 +2,17 @@ import argparse
 from compare import *
 from Table import *
 
-diretorios = ["GC 0308", "NT 99141", "OV 2640", "OV 7670"]
-for diretorio in diretorios:
-    print("\n\n----------------------- ", diretorio, " ----------------------- \n")
+cameras = ["gc0308", "nt99141", "ov2640", "ov7670"]
+for camera in cameras:
+    print("\n\n----------------------- ", camera, " ----------------------- \n")
 
-    # Faz a comparação e cria o dataframe
-    dados = compare_images(diretorio)
-    df = Table(dados)
-    
-    df.save(diretorio)
-    print("Tabela Metricas x Imagens salva\n")
-    df.show()
+    for group in os.listdir(camera):
+        path = os.path.join(camera, group)
+        
+        # Faz a comparação e cria o dataframe
+        dados = compare_images(path)
+        df = Table(dados)
+        
+        df.save(path)
+        print(f"\n\nTabela Metricas x Imagens {group} salva\n")
+        df.show()
