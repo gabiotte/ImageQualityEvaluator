@@ -2,17 +2,19 @@ import argparse
 from compare import *
 from Table import *
 
-cameras = ["gc0308", "nt99141", "ov2640", "ov7670"]
-for camera in cameras:
+main_dir = "projeto"
+
+for camera in os.listdir(main_dir):
+
     print("\n\n----------------------- ", camera, " ----------------------- \n")
 
-    for group in os.listdir(camera):
-        path = os.path.join(camera, group)
+    camera_path = os.path.join(main_dir, camera)
+    for group in os.listdir(camera_path):
+        path = os.path.join(camera_path, group)
         
         # Faz a comparação e cria o dataframe
-        dados = compare_images(path)
-        df = Table(dados)
+        df = Table(path)
         
-        df.save(path)
+        df.save()
         print(f"\n\nTabela Metricas x Imagens {group} salva\n")
         df.show()

@@ -1,6 +1,7 @@
 import os
 from collections import defaultdict
 from metrics import *
+import pandas as pd
 
 def compare_images(diretorio):
     results = defaultdict(list)
@@ -9,6 +10,11 @@ def compare_images(diretorio):
 
     for file in os.listdir(diretorio):
         path = os.path.join(diretorio, file)
+
+        if file == "tempo.csv":
+            file_path = os.path.join(diretorio,file)
+            df_tempo = pd.read_csv(file_path)
+            continue
 
         if not file.lower().endswith(allowed_ext):
             continue
@@ -21,4 +27,4 @@ def compare_images(diretorio):
         results["Contraste"].append(contrast_rms(image))
         results["Ruído"].append(signal_to_noise_ratio(image))
             
-    return results
+    return results, df_tempo

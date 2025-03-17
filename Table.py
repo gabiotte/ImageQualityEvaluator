@@ -2,15 +2,20 @@ import pandas as pd
 import os
 from collections import defaultdict
 import numpy as np
+from compare import * 
 
 class Table: 
-    def __init__(self, dados):
-        self.df = pd.DataFrame(dados).round(2)
+    def __init__(self, diretorio):
+        self.diretorio = diretorio
+        self.dados, self.time = compare_images(diretorio)
+        self.df = pd.DataFrame(self.dados).round(2)
         self.df.set_index("Imagem", inplace=True)
+        self.time.set_index("Imagem", inplace=True)
+        self.df = self.df.join(self.time)
 
     def show(self):
         print(self.df)
 
-    def save(self, diretorio):
-        path = os.path.join(diretorio, "metrics_x_images.csv")
+    def save(self):
+        path = os.path.join(self.diretorio, "metrics_x_images.csv")
         self.df.to_csv(path)
