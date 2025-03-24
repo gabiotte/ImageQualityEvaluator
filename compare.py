@@ -1,6 +1,6 @@
 import os
 from collections import defaultdict
-from metrics import *
+from Image import *
 import pandas as pd
 
 def compare_images(diretorio):
@@ -19,12 +19,12 @@ def compare_images(diretorio):
         if not file.lower().endswith(allowed_ext):
             continue
 
-        image = load_image(path)
+        image = Image(path)
 
         results["Imagem"].append(file)
-        results["Nitidez"].append(laplacian_variance(image))
-        results["Desfoque"].append(marziliano_blur(image))
-        results["Contraste"].append(contrast_rms(image))
-        results["Ruído"].append(signal_to_noise_ratio(image))
+        results["Nitidez"].append(image.laplacian_variance())
+        results["Desfoque"].append(image.marziliano_blur())
+        results["Contraste"].append(image.contrast_rms())
+        results["Ruído"].append(image.signal_to_noise_ratio())
             
     return results, df_tempo
