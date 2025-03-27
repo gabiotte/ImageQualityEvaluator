@@ -31,7 +31,7 @@ def compare_group_images(group_path, group):
     results_df = pd.DataFrame(results).round(2)
     return results_df
 
-def create_table(camera_path):
+def camera_table(camera_path):
     table_df = pd.DataFrame()
 
     for group in os.listdir(camera_path):
@@ -39,5 +39,11 @@ def create_table(camera_path):
         group_results_df = compare_group_images(group_path, group)
 
         table_df = pd.concat([group_results_df, table_df])
+    
+    table_path = os.path.join(camera_path,"comparacao.csv")
+    save(table_df,table_path)
 
     return table_df
+
+def save(dataframe, path):
+    dataframe.to_csv(path)
