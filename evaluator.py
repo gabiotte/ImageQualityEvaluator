@@ -1,8 +1,11 @@
 import argparse
 from compare import *
-from Table import *
 
-main_dir = "projeto"
+parser = argparse.ArgumentParser()
+parser.add_argument("--diretorio", type=str, required=True, help="Diretório principal do projeto")
+args = parser.parse_args()
+
+main_dir = args.diretorio
 
 for camera in os.listdir(main_dir):
 

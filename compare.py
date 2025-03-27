@@ -35,7 +35,11 @@ def camera_table(camera_path):
     table_df = pd.DataFrame()
 
     for group in os.listdir(camera_path):
+        
         group_path = os.path.join(camera_path, group)
+        if not os.path.isdir(group_path):
+            continue
+
         group_results_df = compare_group_images(group_path, group)
 
         table_df = pd.concat([group_results_df, table_df])
