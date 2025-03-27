@@ -7,11 +7,9 @@ from compare import *
 class Table: 
     def __init__(self, diretorio):
         self.diretorio = diretorio
-        self.dados, self.time = compare_images(diretorio)
+        self.dados = compare_images(diretorio)
         self.df = pd.DataFrame(self.dados).round(2)
         self.df.set_index("Imagem", inplace=True)
-        self.time.set_index("Imagem", inplace=True)
-        self.df = self.df.join(self.time)
 
     def show(self):
         print(self.df)
