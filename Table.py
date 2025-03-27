@@ -1,7 +1,5 @@
 import pandas as pd
 import os
-from collections import defaultdict
-import numpy as np
 from compare import * 
 
 class Table: 
