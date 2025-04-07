@@ -43,10 +43,12 @@ def camera_table(camera_path):
 
         table_df = pd.concat([group_results_df, table_df])
     
-    table_path = os.path.join(camera_path,"comparacao.csv")
+    table_path = os.path.join(camera_path,"comparacao.xlsx")
     save(table_df,table_path)
 
     return table_df
 
 def save(dataframe, path):
-    dataframe.to_csv(path)
+    #dataframe.to_csv(path)
+    with pd.ExcelWriter(path) as writer:
+        dataframe.to_excel(writer, index=False)
