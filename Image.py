@@ -20,11 +20,13 @@ class Image:
 
 # 1. Ruído
     def noise(self):
-
-        # Definir área lisa da imagem !!!!
-
         gray = convert_gray(self.image)
-        return np.std(gray)
+        
+        x, y = 0, 150
+        w, h = 150, 150
+        patch = gray[y:y+h, x:x+h]
+        
+        return np.std(patch)
 
 # 2. Desfoque
     def blur(self):
