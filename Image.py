@@ -18,29 +18,22 @@ class Image:
     def set_capture_time(self,time):
         self.capture_time = time
 
-    # 1. Nitidez
+# 1. Ruído
+    def noise(self):
 
-    def laplacian_variance(self):
-        gray = convert_gray(self.image)
-        return cv2.Laplacian(gray, cv2.CV_64F).var()
+        # Definir área lisa da imagem !!!!
 
-    # 2. Ausência de desfoque
-
-    def marziliano_blur(self):
-        gray = convert_gray(self.image)
-        sobelx = cv2.Sobel(gray, cv2.CV_64F, 1, 0, ksize=3)
-        return np.mean(np.abs(sobelx))
-
-    # 3. Contraste
-
-    def contrast_rms(self):
         gray = convert_gray(self.image)
         return np.std(gray)
 
-    # 4. Ruído
-
-    def signal_to_noise_ratio(self):
+# 2. Desfoque
+    def blur(self):
         gray = convert_gray(self.image)
-        mean_signal = np.mean(gray)
-        noise = np.std(gray)
-        return mean_signal / noise if noise != 0 else 0
+        laplacian = cv2.Laplacian(gray, cv2.CV_64F)
+        return laplacian.var()
+    
+# 3. Contraste
+    def contrast(self):
+        gray = convert_gray(self.image)
+        return np.std(gray)
+    

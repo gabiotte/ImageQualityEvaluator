@@ -22,10 +22,9 @@ def compare_group_images(group_path, group):
 
         results["Grupo"].append(group)
         results["Imagem"].append(file)
-        results["Nitidez"].append(image.laplacian_variance())
-        results["Desfoque"].append(image.marziliano_blur())
-        results["Contraste"].append(image.contrast_rms())
-        results["Ruído"].append(image.signal_to_noise_ratio())
+        results["Desfoque"].append(image.blur())
+        results["Contraste"].append(image.contrast())
+        results["Ruído"].append(image.noise())
         results["Tempo de Captura (µs)"].append(capture_time_df.loc[file," Tempo (µs)"])
             
     results_df = pd.DataFrame(results).round(2)
