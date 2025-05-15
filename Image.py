@@ -11,9 +11,13 @@ def convert_gray(image):
     return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
 class Image:
-    def __init__(self, image_path):
+    def __init__(self, image_path, x, y, w, h):
         self.image = load_image(image_path)
         self.capture_time = 0
+        self.x = x
+        self.y = y
+        self.w = w
+        self.h = h
     
     def set_capture_time(self,time):
         self.capture_time = time
@@ -22,9 +26,7 @@ class Image:
     def noise(self):
         gray = convert_gray(self.image)
         
-        x, y = 0, 150
-        w, h = 150, 150
-        patch = gray[y:y+h, x:x+h]
+        patch = gray[self.y:self.y + self.h, self.x:self.x + self.w]
         
         return np.std(patch)
 
