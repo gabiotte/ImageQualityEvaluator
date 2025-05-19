@@ -19,7 +19,7 @@ def main(main_dir, modo):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Calcula as métricas das fotos e/ou compara as métricas de cada câmera"
+        description="Calcula as métricas das fotos ou compara as métricas de cada câmera"
     )
     parser.add_argument("--diretorio", type=str, required=True, 
                         help="Diretório onde estão as fotos ou as câmeras")
