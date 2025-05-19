@@ -7,13 +7,13 @@ def main(main_dir, modo):
         print(f"[✘] Diretório inválido: {main_dir}")
         return
     
-    if modo in ["calcular", "ambos"]:
+    if modo in ["calcular"]:
         print("Calculando métricas...")
         compare_table = create_compare_table(main_dir)
         print(compare_table)
         save(main_dir, compare_table)
 
-    if modo in ["comparar", "ambos"]:
+    if modo in ["comparar"]:
         print("Comparando métricas...")
         compare_cameras(main_dir)
 
@@ -23,8 +23,8 @@ if __name__ == "__main__":
     )
     parser.add_argument("--diretorio", type=str, required=True, 
                         help="Diretório onde estão as fotos ou as câmeras")
-    parser.add_argument("--modo", type=str, choices=["calcular", "comparar", "ambos"], default="ambos",
-                        help="Modo de execução: 'calcular', 'comparar' ou 'ambos' (padrão)")
+    parser.add_argument("--modo", type=str, choices=["calcular", "comparar"],
+                        help="Modo de execução: 'calcular' ou 'comparar'")
 
     args = parser.parse_args()
-    main(args.diretorio)
+    main(args.diretorio, args.modo)
