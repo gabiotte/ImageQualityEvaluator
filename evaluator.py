@@ -1,21 +1,30 @@
 import argparse
-from compare import *
+from calculate_metrics import *
+from compare_metrics import *
 
-def main(main_dir):
+def main(main_dir, modo):
     if not os.path.isdir(main_dir):
         print(f"[✘] Diretório inválido: {main_dir}")
         return
     
-    compare_table = create_compare_table(main_dir)
-    print(compare_table)
-    save(main_dir, compare_table)
+    if modo in ["calcular", "ambos"]:
+        print("Calculando métricas...")
+        compare_table = create_compare_table(main_dir)
+        print(compare_table)
+        save(main_dir, compare_table)
+
+    if modo in ["comparar", "ambos"]:
+        print("Comparando métricas...")
+        compare_cameras(main_dir)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Gera uma tabela comparativa para cada câmera em um diretório."
+        description="Calcula as métricas das fotos e/ou compara as métricas de cada câmera"
     )
-    parser.add_argument("--diretorio", type=str, required=True, help="Diretório principal onde estão as fotos"
-    )
+    parser.add_argument("--diretorio", type=str, required=True, 
+                        help="Diretório onde estão as fotos ou as câmeras")
+    parser.add_argument("--modo", type=str, choices=["calcular", "comparar", "ambos"], default="ambos",
+                        help="Modo de execução: 'calcular', 'comparar' ou 'ambos' (padrão)")
 
     args = parser.parse_args()
     main(args.diretorio)
