@@ -24,8 +24,16 @@ def compare_cameras(diretorio):
             last_column = (camera_df.columns)[-1]
             capture_time = camera_df[last_column].mean().round(0)
 
+            # Abre o aquivo tempo.csv e transforma em um DF
+            time_path = os.path.join(camera_path, "tempo.csv")
+            time_df = pd.read_csv(time_path)
+            time_df.set_index("Imagem", inplace=True)
+             
+            # Encontra o tempo de inicialização
+            init_time = time_df.loc["camera"," Tempo (µs)"]
+
             # Adiciona tudo ao dicionário
-            linhas.append({"Camera":camera, **metrics.to_dict(), last_column: capture_time})
+            linhas.append({"Camera":camera, **metrics.to_dict(), last_column: capture_time, "Tempo de Inicialização":init_time})
             
     # Tranforma o dicionário em DF
     final_df = pd.DataFrame(linhas)
