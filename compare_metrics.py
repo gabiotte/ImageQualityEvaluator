@@ -22,7 +22,7 @@ def compare_cameras(diretorio):
 
             # Calcula a moda da útima coluna (Tempo de Captura)
             last_column = (camera_df.columns)[-1]
-            capture_time = camera_df[last_column].mode().iloc[0]
+            capture_time = camera_df[last_column].mean().round(0)
 
             # Adiciona tudo ao dicionário
             linhas.append({"Camera":camera, **metrics.to_dict(), last_column: capture_time})
