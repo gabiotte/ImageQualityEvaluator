@@ -20,7 +20,7 @@ def compare_cameras(diretorio):
             # Calcula as médias, menos da primeira coluna (Imagem) e da útima (Tempo de captura)
             metrics = camera_df.iloc[:, 1:-1].mean()
 
-            # Calcula a moda da útima coluna (Tempo de Captura)
+            # Calcula a média arredondada da útima coluna (Tempo de Captura)
             last_column = (camera_df.columns)[-1]
             capture_time = camera_df[last_column].mean().round(0)
 
