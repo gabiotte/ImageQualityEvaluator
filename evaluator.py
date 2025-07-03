@@ -9,9 +9,7 @@ def main(main_dir, modo):
     
     if modo in ["calcular"]:
         print("Calculando métricas...")
-        compare_table = calculate_metrics(main_dir)
-        print(compare_table)
-        save(main_dir, compare_table)
+        print(calculate_metrics(main_dir))        
 
     if modo in ["comparar"]:
         print("Comparando métricas...")

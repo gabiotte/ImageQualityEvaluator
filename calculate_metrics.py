@@ -45,6 +45,7 @@ def calculate_metrics(dir):
     
     # Arredonda os valores e retorna o DF
     results_df = pd.DataFrame(results).round(2)
+    save(dir, results_df)
     return results_df
 
 def save(dir, dataframe):
