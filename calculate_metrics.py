@@ -3,7 +3,7 @@ from collections import defaultdict
 from Image import *
 import pandas as pd
 
-def create_compare_table(dir):
+def calculate_metrics(dir):
     results = defaultdict(list)
 
     allowed_ext = (".jpg", ".jpeg", ".bmp")
