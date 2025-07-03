@@ -41,7 +41,7 @@ def create_compare_table(dir):
         results["Contraste"].append(image.contrast())
         results["Ruído"].append(image.noise())
         if os.path.exists(capture_time_path):
-            results["Tempo de Captura (µs)"].append(capture_time_df.loc[file," Tempo (µs)"])
+            results["Tempo de Captura (µs)"].append(capture_time_df.loc[file,"Tempo (µs)"])
     
     # Arredonda os valores e retorna o DF
     results_df = pd.DataFrame(results).round(2)

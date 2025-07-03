@@ -19,9 +19,6 @@ def compare_cameras(diretorio):
 
             # Calcula as médias, menos da primeira coluna (Imagem) e da útima (Tempo de captura)
             metrics = camera_df.iloc[:, 1:-1].mean()
-            nitidez = metrics.iloc[0]
-            ruido = metrics.iloc[2]
-            nitidez_real = nitidez/(1+ruido)
 
             # Calcula a média arredondada da útima coluna (Tempo de Captura)
             last_column = (camera_df.columns)[-1]
@@ -33,10 +30,10 @@ def compare_cameras(diretorio):
             time_df.set_index("Imagem", inplace=True)
              
             # Encontra o tempo de inicialização
-            init_time = time_df.loc["camera"," Tempo (µs)"]
+            init_time = time_df.loc["camera","Tempo (µs)"]
 
             # Adiciona tudo ao dicionário
-            linhas.append({"Camera":camera, **metrics.to_dict(), "Nitidez Real": nitidez_real, last_column: capture_time, "Tempo de Inicialização":init_time})
+            linhas.append({"Camera":camera, **metrics.to_dict(), last_column: capture_time, "Tempo de Inicialização":init_time})
             
     # Tranforma o dicionário em DF
     final_df = pd.DataFrame(linhas)
