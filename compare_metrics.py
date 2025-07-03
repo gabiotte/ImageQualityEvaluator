@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 from collections import defaultdict
-from calculate_metrics import save
+from calculate_metrics import calculate_metrics, save
 
 def compare_cameras(diretorio):
 
@@ -14,8 +14,12 @@ def compare_cameras(diretorio):
 
             # Abre o arquivo comparação.xlsx e tranforma em um DF
             comparacao_path = os.path.join(camera_path,"comparacao.xlsx")
+
+            if not os.path.exists(comparacao_path):
+                print(f"[!] Arquivo não encontrado em {camera_path}. Calculando métricas e gerando o arquivo.")
+                calculate_metrics(camera_path)
+
             camera_df = pd.read_excel(comparacao_path)  
-            print(camera_df)
 
             # Calcula as médias, menos da primeira coluna (Imagem) e da útima (Tempo de captura)
             metrics = camera_df.iloc[:, 1:-1].mean()
