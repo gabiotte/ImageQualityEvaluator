@@ -44,3 +44,36 @@ def compare_cameras(diretorio):
 
     # Salva o DF como um arquivo xlsx
     save(diretorio, final_df)
+
+def gerar_medias_agrupadas(diretorio):
+
+    # Abre o arquivo de comparação
+    caminho = os.path.join(diretorio, "comparacao.xlsx")
+    if not os.path.exists(caminho):
+        print(f"Arquivo comparacao.xlsx não encontrado em {diretorio}")
+        return
+
+    df = pd.read_excel(caminho)
+
+    if "Camera" not in df.columns:
+        print(f"Coluna 'Camera' não encontrada em {caminho}")
+        return
+
+    # Extrai o nome do sensor antes do .
+    df["Grupo"] = df["Camera"].astype(str).apply(lambda x: x.split(".")[0])
+
+    # Converte todas as colunas de métricas para numérico e exclui as de camera e grupo
+    metricas = df.drop(columns=["Camera", "Grupo"], errors="ignore")
+    metricas = metricas.apply(pd.to_numeric, errors="coerce")
+
+    # Junta o grupo de volta 
+    df_grupos = pd.concat([df[["Grupo"]], metricas], axis=1)
+
+    # Agrupa as cameras e calcula a média
+    df_medias = df_grupos.groupby("Grupo").mean(numeric_only=True).round(2).reset_index()
+    df_medias.rename(columns={"Grupo": "Camera"}, inplace=True)
+
+    # Salva o resultado final
+    saida = os.path.join(diretorio, "resultado.xlsx")
+    df_medias.to_excel(saida, index=False)
+    print(f"Resultado salvo em: {saida}")
