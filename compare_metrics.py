@@ -37,7 +37,7 @@ def compare_cameras(diretorio):
             init_time = time_df.loc["camera","Tempo (µs)"]
 
             # Adiciona tudo ao dicionário
-            linhas.append({"Camera":camera, **metrics.to_dict(), last_column: capture_time, "Tempo de Inicialização":init_time})
+            linhas.append({"Camera":camera, **metrics.to_dict(), last_column: capture_time, "Inicialização (µs)":init_time})
             
     # Tranforma o dicionário em DF
     final_df = pd.DataFrame(linhas)
